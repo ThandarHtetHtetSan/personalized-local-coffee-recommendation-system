@@ -8,13 +8,16 @@ export default function Recommendation() {
   const [recommendations, setRecommendations] = useState(recommendationsArray);
 
   const handleRecommend = async (filters) => {
+    const payload = {
+      selectedValues: filters
+    };
     try {
-      const response = await fetch('/api/recommendations', {
+      const response = await fetch('http://localhost:5000/api/data', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(filters),
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
