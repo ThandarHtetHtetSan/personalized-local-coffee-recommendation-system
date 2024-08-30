@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+
+/* Example styles for animations */
+.transition {
+  transition-property: all;
+  transition-duration: 0.3s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transform {
+  transform: none;
+}
+
+.hover\:translate-y-1:hover {
+  transform: translateY(-1px);
+}
+
+.hover\:shadow-xl:hover {
+  box-shadow: 0 10px 28px rgba(0,0,0,0.08), 0 6px 10px rgba(0,0,0,0.07);
+}
+
+/* Additional global styles */
+.custom-checkbox {
+  appearance: none;
+  background-color: #fff;
+  border: 1px solid #d1d5db;
+  padding: 0.5rem;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 0.25rem;
+}
+
+.custom-checkbox:checked {
+  background-color: #A53F3F;
+  border-color: #A53F3F;
+}
+
+.nav-link {
+  position: relative;
+  display: inline-block;
+  padding: 1.4rem;
+  text-decoration: none;
+  overflow: hidden;
+}
+
+.nav-link::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #634832;
+  top: 0;
+  right: -100%;
+  transition: right 0.3s ease-in-out;
+  z-index: -1;
+}
+
+.nav-link:hover::before {
+  right: 0;
+}
+
+.nav-link.active {
+  color: #dbc1ac;
+}
+
+.image-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.image-overlay::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 100%);
+  transform: skew(-25deg);
+  transition: left 0.5s ease-in-out;
+  z-index: 10; /* Ensure it's on top of the image */
+}
+
+.image-wrapper:hover .image-overlay::before {
+  left: 100%;
+}
+
+.image-wrapper:hover img {
+  --tw-scale-x: 1.1;
+  --tw-scale-y: 1.1;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
