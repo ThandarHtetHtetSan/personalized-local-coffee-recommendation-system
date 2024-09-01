@@ -25,7 +25,8 @@ export default function Recommendation() {
       }
 
       const data = await response.json();
-      setRecommendations(data);
+      console.log(data)
+      // setRecommendations(data);
     } catch (error) {
       console.error('Error fetching recommendations:', error);
     }
