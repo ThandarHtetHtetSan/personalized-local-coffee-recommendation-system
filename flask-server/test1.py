@@ -112,13 +112,16 @@ pipeline = [
 ]
 
 dbData = list(mongo.db.coffees.aggregate(pipeline))
+
+# print(dbData)
+# print('---------------------------')
 # Convert the 'price' column from int to str
 # dbData['price'] = dbData['price'].astype(str)
 data = pd.DataFrame(dbData)
 data['price'] = data['price'].astype(str)
 data['no_of_bags'] = data['no_of_bags'].astype(str)
+# print(data)
 
-print(data['price'])
 # print(data['no_of_bags'])
 # Define the mappings for categorical features
 mappings = {
@@ -179,6 +182,30 @@ def receive_data():
     print(recommendations)
     print(type(recommendations))
     return jsonify(recommendations)
+
+@app.route('/api/add-coffee', methods=['POST'])
+def add_coffee():
+    data = request.json
+    print(data)
+    mongo.db.coffees.insert_one({
+        "brand_name": data['brand_name'],
+        "coffee_type": data['coffee_type'],
+        "processing_method": data['processing_method'],
+        "no_of_bags": int(data['no_of_bags']),
+        "price": str(data['price']),
+        "roast_level": data['roast_level'],
+        "fragrance": data['fragrance'],
+        "flavor": data['flavor'],
+        "ground_type": data['ground_type'],
+        "body": data['body']
+    })
+    return jsonify({"message": "Coffee added successfully!"}), 201
+
+@app.route('/api/coffees', methods=['GET'])
+def get_coffees():
+
+
+    return jsonify(dbData)
 
 if __name__ == '__main__':
     app.run(debug=True)
