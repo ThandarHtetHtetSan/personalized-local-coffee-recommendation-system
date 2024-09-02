@@ -23,6 +23,7 @@ from sklearn.neighbors import KNeighborsClassifier
 import pandas as pd
 import numpy as np
 from flask_pymongo import PyMongo
+from bson.objectid import ObjectId
 
 app = Flask(__name__)
 CORS(app)
@@ -203,9 +204,46 @@ def add_coffee():
 
 @app.route('/api/coffees', methods=['GET'])
 def get_coffees():
-
-
     return jsonify(dbData)
+# Delete data endpoint
+@app.route('/api/delete-coffee', methods=['DELETE'])
+def delete_data():
+    # Get the unique identifier from the request (e.g., brandName or _id)
+    identifier = request.json.get('_id')  # or request.json.get('_id')
+    
+    # Delete the document from the collection
+    result = dbData.delete_one({'_id': identifier})  # or {'_id': ObjectId(identifier)}
+    
+    if result.deleted_count > 0:
+        return jsonify({"message": "Data deleted successfully!"}), 200
+    else:
+        return jsonify({"message": "Data not found!"}), 404
+    
+@app.route('/api/edit-coffee/<coffee_id>', methods=['PUT'])
+def edit_coffee(coffee_id):
+    data = request.json
+    updated_data = {
+        "brand_name": data.get('brand_name'),
+        "coffee_type": data.get('coffee_type'),
+        "processing_method": data.get('processing_method'),
+        "no_of_bags": int(data.get('no_of_bags')),
+        "price": str(data.get('price')),
+        "roast_level": data.get('roast_level'),
+        "fragrance": data.get('fragrance'),
+        "flavor": data.get('flavor'),
+        "ground_type": data.get('ground_type'),
+        "body": data.get('body')
+    }
+    
+    result = mongo.db.coffees.update_one(
+        {"_id": ObjectId(coffee_id)},
+        {"$set": updated_data}
+    )
+    
+    if result.matched_count == 1:
+        return jsonify({"message": "Coffee updated successfully!"}), 200
+    else:
+        return jsonify({"message": "Coffee not found!"}), 404
 
 if __name__ == '__main__':
     app.run(debug=True)
