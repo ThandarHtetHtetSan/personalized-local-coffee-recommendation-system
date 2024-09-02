@@ -40,12 +40,13 @@ export default function Recommendation() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {recommendations.map((coffee) => (
               <CoffeeCard
-                key={coffee.name}
-                brand={coffee.brand}
-                name={coffee.name}
+                key={coffee._id}
+                slug={coffee._id}
+                brand={coffee.brand_name}
+                name={coffee.class_name}
                 price={coffee.price}
-                thumbnail={coffee.thumbnail}
-                gram={coffee.gram}
+                thumbnail='images/hot-coffee-cup.jpeg'
+                gram={coffee.net_weight}
               />
             ))}
           </div>
