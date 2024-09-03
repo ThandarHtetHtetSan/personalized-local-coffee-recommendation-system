@@ -145,7 +145,7 @@ print(data[features])
 # print(data['_id'])
 # Prepare features (X) and target (y)
 X = data[features]
-y = data[['class_name', 'brand_name', 'net_weight', 'price', 'processing_method', 'coffee_type', 'contact', 'no_of_bags']] 
+y = data[['_id', 'class_name', 'brand_name', 'net_weight', 'price', 'processing_method', 'coffee_type', 'contact', 'no_of_bags']] 
 
 # Train KNN model
 knn = KNeighborsClassifier(n_neighbors=5)
