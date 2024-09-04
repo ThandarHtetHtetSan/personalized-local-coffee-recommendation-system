@@ -1,6 +1,6 @@
 export const recommendations = [
   {
-    "_id": "1",
+    "_id": "66c4d634c0935cb1598e78af",
     "brand_name": "Ever Win",
     "class_name": "2 Plus 1",
     "coffee_type": "Arabica",
@@ -11,7 +11,7 @@ export const recommendations = [
     "processing_method": "Washed"
   },
   {
-    "_id": "2",
+    "_id": "66c4d634c0935cb1598e78b6",
     "brand_name": "Mountainer Coffee",
     "class_name": "Mountainer Coffee Catimor",
     "coffee_type": "Arabica",
@@ -22,7 +22,7 @@ export const recommendations = [
     "processing_method": "Honey"
   },
   {
-    "_id": "3",
+    "_id": "66c4d634c0935cb1598e78bd",
     "brand_name": "Mountainer Coffee",
     "class_name": "Mountainer Coffee Natural Sun Dried Catmior",
     "coffee_type": "Arabica",
@@ -33,7 +33,7 @@ export const recommendations = [
     "processing_method": "Honey"
   },
   {
-    "_id": "4",
+    "_id": "66c4d634c0935cb1598e78c4",
     "brand_name": "Sawbwa Coffee",
     "class_name": "Gold Drip Bag",
     "coffee_type": "Arabica",
@@ -44,7 +44,7 @@ export const recommendations = [
     "processing_method": "Honey"
   },
   {
-    "_id": "5",
+    "_id": "66c4d634c0935cb1598e78cb",
     "brand_name": "Ever Win",
     "class_name": "2 Plus 2",
     "coffee_type": "Arabica",
