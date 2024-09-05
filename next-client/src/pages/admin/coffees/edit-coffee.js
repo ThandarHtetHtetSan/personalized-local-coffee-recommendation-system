@@ -1,5 +1,6 @@
 import CoffeeForm from '@/components/forms/CoffeeForm';
 import { useCoffee } from '@/contexts/CoffeeContext';
+import axios from 'axios';
 import { useState } from 'react';
 
 const EditCoffee = ({ editCoffee, onClose }) => {
@@ -20,8 +21,8 @@ const EditCoffee = ({ editCoffee, onClose }) => {
       delete coffee._id
       console.log('coffeeId', coffeeId)
       console.log('coffee', coffee)
-      // const response = await axios.put(`http://localhost:5000/api/edit-coffee/${coffeeId}`, coffee);
-      // console.log(response.data);
+      const response = await axios.put(`http://127.0.0.1:5000/api/edit-coffee/${coffeeId}`, coffee);
+      console.log(response.data);
       const newCoffeeList = coffeeList.map(cof => cof._id === coffeeId ? ({ ...coffee, _id: coffeeId }) : cof);
       setCoffeeList(newCoffeeList);
       onClose();

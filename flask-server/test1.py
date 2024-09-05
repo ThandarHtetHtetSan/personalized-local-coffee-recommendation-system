@@ -109,22 +109,30 @@ pipeline = [
             "flavor": "$flavor.type",
             "ground_type": "$ground_type.type",
             "body": "$body.type"
-    }
+        }
+    },
+    {
+        "$sort": {
+            "_id": -1  # Sorting by price in descending order
+        }
     }
 ]
 
-dbData = list(mongo.db.coffees.aggregate(pipeline))
+def getCoffeesFromDB():
+    print("Call to mongodb")
+    dbData = list(mongo.db.coffees.aggregate(pipeline))
+    for item in dbData:
+        # Convert the '_id' field to string
+        item['_id'] = str(item['_id'])
+        
+        # Convert other relevant fields to string, if they exist
+        if 'price' in item:
+            item['price'] = str(item['price'])
+        if 'no_of_bags' in item:
+            item['no_of_bags'] = str(item['no_of_bags'])
+    
+    return dbData
 
-# print('---------------------------')
-# Convert the 'price' column from int to str
-# dbData['price'] = dbData['price'].astype(str)
-data = pd.DataFrame(dbData)
-data['_id'] = data['_id'].astype(str)
-data['price'] = data['price'].astype(str)
-data['no_of_bags'] = data['no_of_bags'].astype(str)
-# print(data)
-
-# print(data['no_of_bags'])
 # Define the mappings for categorical features
 mappings = {
     'roast_level': {'Light': 0, 'Medium Light': 1, 'Medium': 2, 'Medium Dark': 3, 'Dark': 4},
@@ -135,53 +143,47 @@ mappings = {
 }
 features = ['roast_level', 'ground_type', 'fragrance', 'flavor', 'body']
 
-# Apply label encoding to features
-for feature in features:
-    data[feature] = data[feature].map(mappings[feature])
-
-print('-------')
-print(data[features])
-
-# print('-------')
-# print(data['_id'])
-# Prepare features (X) and target (y)
-X = data[features]
-y = data[['_id', 'class_name', 'brand_name', 'net_weight', 'price', 'processing_method', 'coffee_type', 'contact', 'no_of_bags']] 
-
-# Train KNN model
-knn = KNeighborsClassifier(n_neighbors=5)
-knn.fit(X, y)
 
 @app.route('/api/data', methods=['POST'])
 def receive_data():
-    data = request.json  # Get JSON data from the request
+    dbData = getCoffeesFromDB()
+    print(dbData)
+
+    data = pd.DataFrame(dbData)
+    # Apply label encoding to features
+    for feature in features:
+        data[feature] = data[feature].map(mappings[feature])
+
+    # Prepare features (X) and target (y)
+    X = data[features]
+    y = data[['_id', 'class_name', 'brand_name', 'net_weight', 'price', 'processing_method', 'coffee_type', 'contact', 'no_of_bags']] 
+
+    # Train KNN model
+    knn = KNeighborsClassifier(n_neighbors=5)
+    knn.fit(X, y)
+
+    inputData = request.json  # Get JSON data from the request
     # Extract selectedValues from the incoming data
-    selected_values = data.get('selectedValues', {})
+    selected_values = inputData.get('selectedValues', {})
     print(selected_values)
-    print(type(selected_values))
     roast_level = selected_values['roast']
-    print(roast_level)
     ground_type = selected_values['groundtype']
-    print(ground_type)
     fragrance = selected_values['fragrance']
-    print(fragrance)
     flavor = selected_values['flavor']
-    print(flavor)
     body = selected_values['body']
-    print(body)
+
     user_input_df = pd.DataFrame([{
-            'roast_level': roast_level,
-            'ground_type': ground_type,
-            'fragrance': fragrance,
-            'flavor': flavor,
-            'body': body
-        }], columns=features)
+        'roast_level': roast_level,
+        'ground_type': ground_type,
+        'fragrance': fragrance,
+        'flavor': flavor,
+        'body': body
+    }], columns=features)
     # Create feature array
     # features = np.array([[roast_level, ground_type, fragrance, flavor, body]])
     distances, indices = knn.kneighbors(user_input_df)
     recommendations = y.iloc[indices[0]].to_dict(orient='records')
     print(recommendations)
-    print(type(recommendations))
     return jsonify(recommendations)
 
 @app.route('/api/add-coffee', methods=['POST'])
@@ -204,15 +206,13 @@ def add_coffee():
 
 @app.route('/api/coffees', methods=['GET'])
 def get_coffees():
+    dbData = getCoffeesFromDB()
     return jsonify(dbData)
 # Delete data endpoint
-@app.route('/api/delete-coffee', methods=['DELETE'])
-def delete_data():
-    # Get the unique identifier from the request (e.g., brandName or _id)
-    identifier = request.json.get('_id')  # or request.json.get('_id')
-    
+@app.route('/api/delete-coffee/<coffee_id>', methods=['DELETE'])
+def delete_data(coffee_id):
     # Delete the document from the collection
-    result = dbData.delete_one({'_id': identifier})  # or {'_id': ObjectId(identifier)}
+    result =  mongo.db.coffees.delete_one({'_id': ObjectId(coffee_id)})  # or {'_id': ObjectId(identifier)}
     
     if result.deleted_count > 0:
         return jsonify({"message": "Data deleted successfully!"}), 200

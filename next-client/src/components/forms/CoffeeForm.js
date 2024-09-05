@@ -5,17 +5,18 @@ import TextInput from "../inputs/TextInput"
 const CoffeeForm = ({ formData, handleChange, handleSubmit }) => {
     return (
         <form onSubmit={handleSubmit}>
+            <TextInput label="Product Name"
+                type="text"
+                name="class_name"
+                value={formData.class_name}
+                onChange={handleChange}
+                containerClassName="mb-4"
+            />
             <div className="grid grid-cols-2 gap-y-4 gap-x-8">
                 <TextInput label="Brand Name"
                     type="text"
                     name="brand_name"
                     value={formData.brand_name}
-                    onChange={handleChange}
-                />
-                <TextInput label="Product Name"
-                    type="text"
-                    name="class_name"
-                    value={formData.class_name}
                     onChange={handleChange}
                 />
                 <TextInput label="Processing Method"
