@@ -23,7 +23,7 @@ const login = () => {
         e.preventDefault();
         // Replace with your actual admin credentials validation
         if (email === 'thandarhtethtetsan23@gmail.com' && password === 'adminpassword') {
-            router.push('/contact'); // Replace with your actual next page route
+            router.push('/admin'); // Replace with your actual next page route
         } else {
             alert('Invalid email or password');
         }

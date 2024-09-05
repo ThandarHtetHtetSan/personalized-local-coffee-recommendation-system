@@ -105,11 +105,11 @@ export const BODY_OPTIONS = [
   },
   {
     value: '66c4d63bc0935cb1598e7a10',
-    label: 'Light'
+    label: 'Lighter'
   },
   {
     value: '66c4d644c0935cb1598e7b39',
-    label: 'Sweet'
+    label: 'Light'
   },
   {
     value: '66c4d634c0935cb1598e78ad',

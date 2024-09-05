@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronDown, faTachometerAlt, faUsers, faCogs, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import Adminheader from './Adminheader';
 
 const primaryColor = "#38220f";
 
@@ -21,6 +22,7 @@ export default function AdminLayout({ children }) {
 
   return (
     <div className="flex h-screen bg-gray-100">
+      
       {/* Sidebar */}
       <div
         className={`bg-white text-[${primaryColor}] ${
@@ -99,7 +101,9 @@ export default function AdminLayout({ children }) {
       </div>
 
       {/* Page Content */}
+      
       <div className="flex-1">
+      <Adminheader></Adminheader>
         {children}
       </div>
     </div>

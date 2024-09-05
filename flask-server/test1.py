@@ -167,7 +167,7 @@ def receive_data():
     selected_values = inputData.get('selectedValues', {})
     print(selected_values)
     roast_level = selected_values['roast']
-    ground_type = selected_values['groundtype']
+    ground_type = selected_values['ground_type']
     fragrance = selected_values['fragrance']
     flavor = selected_values['flavor']
     body = selected_values['body']
@@ -189,18 +189,22 @@ def receive_data():
 @app.route('/api/add-coffee', methods=['POST'])
 def add_coffee():
     data = request.json
-    print(data)
+    print(data['ground_type'])
+    print(data['flavor'])
     mongo.db.coffees.insert_one({
         "brand_name": data['brand_name'],
+        "class_name": data['class_name'],
         "coffee_type": data['coffee_type'],
         "processing_method": data['processing_method'],
         "no_of_bags": int(data['no_of_bags']),
+        "net_weight":data['net_weight'],
+        "contact": data['contact'],
         "price": str(data['price']),
-        "roast_level": data['roast_level'],
-        "fragrance": data['fragrance'],
-        "flavor": data['flavor'],
-        "ground_type": data['ground_type'],
-        "body": data['body']
+        "roast_level": ObjectId(data['roast_level']),
+        "fragrance": ObjectId(data['fragrance']),
+        "flavor": ObjectId(data['flavor']),
+        "ground_type": ObjectId(data['ground_type']),
+        "body": ObjectId(data['body']),
     })
     return jsonify({"message": "Coffee added successfully!"}), 201
 
@@ -228,11 +232,11 @@ def edit_coffee(coffee_id):
         "processing_method": data.get('processing_method'),
         "no_of_bags": int(data.get('no_of_bags')),
         "price": str(data.get('price')),
-        "roast_level": data.get('roast_level'),
-        "fragrance": data.get('fragrance'),
-        "flavor": data.get('flavor'),
-        "ground_type": data.get('ground_type'),
-        "body": data.get('body')
+        "roast_level": ObjectId(data.get('roast_level')),
+        "fragrance": ObjectId(data.get('fragrance')),
+        "flavor": ObjectId(data.get('flavor')),
+        "ground_type": ObjectId(data.get('ground_type')),
+        "body": ObjectId(data.get('body')),
     }
     
     result = mongo.db.coffees.update_one(

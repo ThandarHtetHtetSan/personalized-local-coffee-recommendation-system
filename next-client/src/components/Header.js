@@ -15,6 +15,7 @@ const Header = () => {
           <div className="flex">
             <Link href="/" className={`nav-link ${pathname === '/' ? 'active' : ''}`}>Home</Link>
             <Link href="/recommendation" className={`nav-link ${pathname === '/recommendation' ? 'active' : ''}`}>Recommendations</Link>
+            <Link href="/recipe" className={`nav-link ${pathname === '/recipe' ? 'active' : ''}`}>Recipe</Link>
             <Link href="/about" className={`nav-link ${pathname === '/about' ? 'active' : ''}`}>About</Link>
             <Link href="/contact" className={`nav-link ${pathname === '/contact' ? 'active' : ''}`}>Contact</Link>
             <Link href="/login" className={`nav-link ${pathname === '/login' ? 'active' : ''}`}>
