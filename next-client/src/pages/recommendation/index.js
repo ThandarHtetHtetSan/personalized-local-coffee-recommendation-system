@@ -3,16 +3,19 @@ import CoffeeCard from '@/components/CoffeeCard';
 import { recommendations as recommendationsArray } from '@/utils/jsonData';
 import Layout from '@/components/Layout';
 import { useCoffee } from '@/contexts/CoffeeContext';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 export default function Recommendation() {
-  const { coffeeList, setCoffeeList } = useCoffee();
+  const router = useRouter();
+  const { refresh } = router.query;
+  const { coffeeList, setCoffeeList, filters } = useCoffee();
 
-  const handleRecommend = async (filters) => {
+  const handleRecommend = async () => {
     const images = ['coffee-cup-1.jpg', 'coffee-cup-2.jpeg', 'coffee-cup-3.jpeg', 'coffee-cup-4.jpg', 'coffee-cup-5.jpeg', 'coffee-cup-6.jpeg']
-
-    const coffeesWithImage = recommendationsArray.map(coffee => {
-      const randomNumber = Math.floor(Math.random() * 6);
-      return ({ ...coffee, thumbnail: `images/coffees/${images[randomNumber]}` })
+    const shuffledImages = images.sort(() => Math.random() - 0.5);
+    const coffeesWithImage = recommendationsArray.map((coffee, index) => {
+      return ({ ...coffee, thumbnail: `images/coffees/${shuffledImages[index % shuffledImages.length]}` })
     })
     setCoffeeList(coffeesWithImage);
     return
@@ -41,6 +44,12 @@ export default function Recommendation() {
       console.error('Error fetching recommendations:', error);
     }
   };
+
+  useEffect(() => {
+    if (refresh) {
+      handleRecommend()
+    }
+  }, [refresh])
 
   return (
     <Layout className="container mx-auto">

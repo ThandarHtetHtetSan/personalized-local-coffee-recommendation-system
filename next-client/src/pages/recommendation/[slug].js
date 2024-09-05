@@ -3,6 +3,7 @@ import { useCoffee } from "@/contexts/CoffeeContext";
 import { useRouter } from "next/router";
 import Link from 'next/link';
 import Image from "next/image";
+import FilterSidebar from "@/components/FilterSidebar";
 
 const CoffeeDetails = () => {
   const router = useRouter();
@@ -44,36 +45,47 @@ const CoffeeDetails = () => {
       value: coffee.contact
     },
   ];
+
+  const handleRecommend = async () => {
+    router.push({
+      pathname: '/recommendation',
+      query: { refresh: true },
+    });
+  }
+
   return (
     <Layout className="container mx-auto">
-      <div className="max-w-4xl mx-auto p-4">
-        <div className="bg-white shadow-lg rounded-lg p-6 mb-8">
-          {/* Back Button */}
-          <Link href="/recommendation" passHref>
-            <button className="inline-block mb-4 text-[#38220f] hover:opacity-70 font-semibold">
-              &larr; Back
-            </button>
-          </Link>
+      <div className="flex px-4 py-6">
+        <FilterSidebar onRecommend={handleRecommend} />
+        <div className="w-[55%] mx-auto p-4">
+          <div className="bg-white shadow-lg rounded-lg p-6 mb-8">
+            {/* Back Button */}
+            <Link href="/recommendation" passHref>
+              <button className="inline-block mb-4 text-[#38220f] hover:opacity-70 font-semibold">
+                &larr; Back
+              </button>
+            </Link>
 
-          {/* Coffee Details */}
-          <div className="flex flex-col md:flex-row items-center">
-            {/* Thumbnail */}
-            <div className="w-full md:w-1/3 mb-4 md:mb-0">
-              <Image
-                src={`/${coffee.thumbnail}`}
-                width={200}
-                height={400}
-                alt={`${coffee.brand_name} thumbnail`}
-                className="w-full h-auto rounded-lg shadow-md"
-              />
-            </div>
+            {/* Coffee Details */}
+            <div className="flex flex-col md:flex-row items-center">
+              {/* Thumbnail */}
+              <div className="w-full md:w-1/3 mb-4 md:mb-0">
+                <Image
+                  src={`/${coffee.thumbnail}`}
+                  width={300}
+                  height={300}
+                  alt={`${coffee.brand_name} thumbnail`}
+                  className="w-full h-auto rounded-lg shadow-md"
+                />
+              </div>
 
-            {/* Details */}
-            <div className="w-full md:w-2/3 md:pl-6">
-              <h2 className="text-2xl font-bold text-gray-700 mb-4">{coffee.brand_name}</h2>
-              {coffeeItems.map(coffeeItem => (
-                <p className="text-gray-600 text-base mb-1.5"> {coffeeItem.label} <strong>{coffeeItem.value}</strong></p>
-              ))}
+              {/* Details */}
+              <div className="w-full md:w-2/3 md:pl-6">
+                <h2 className="text-2xl font-bold text-gray-700 mb-4">{coffee.brand_name}</h2>
+                {coffeeItems.map((coffeeItem, index) => (
+                  <p key={index} className="text-gray-600 text-base mb-1.5"> {coffeeItem.label} <strong>{coffeeItem.value}</strong></p>
+                ))}
+              </div>
             </div>
           </div>
         </div>

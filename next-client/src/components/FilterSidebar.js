@@ -1,17 +1,9 @@
+import { useCoffee } from '@/contexts/CoffeeContext';
 import { useEffect, useState } from 'react';
 import { FaCoffee } from "react-icons/fa";
-import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 const FilterSidebar = ({ onRecommend }) => {
-  const router = useRouter();
-  const [filters, setFilters] = useState({
-    roast: '',
-    fragrance: '',
-    groundtype: '',
-    body: '',
-    flavor: ''
-  });
+  const { filters, setFilters } = useCoffee();
   const [isDisabled, setIsDisabled] = useState(true);
 
   const handleCheckboxChange = (e, category) => {
@@ -30,7 +22,7 @@ const FilterSidebar = ({ onRecommend }) => {
   }, [filters])
 
   const handleRecommendClick = () => {
-    onRecommend(filters);
+    onRecommend();
   };
 
   return (
