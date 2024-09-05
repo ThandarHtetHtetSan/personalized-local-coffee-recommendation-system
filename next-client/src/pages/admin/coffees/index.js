@@ -1,9 +1,16 @@
 import AdminLayout from '@/components/AdminLayout'
 import CoffeeTable from '@/components/CoffeeTable';
+import { useCoffee } from '@/contexts/CoffeeContext';
 import { coffees } from '@/utils/jsonData';
-import React from 'react'
+import React, { useEffect } from 'react'
 
 const Coffees = () => {
+  const { coffeeList, setCoffeeList } = useCoffee()
+
+  useEffect(() => {
+    setCoffeeList(coffees)
+  }, []);
+
   const handleEdit = (id) => {
     console.log("Edit item with id:", id);
     // Add your edit logic here
@@ -16,7 +23,7 @@ const Coffees = () => {
 
   return (
     <AdminLayout>
-      <CoffeeTable data={coffees} onEdit={handleEdit} onDelete={handleDelete} />
+      <CoffeeTable data={coffeeList} onEdit={handleEdit} onDelete={handleDelete} />
     </AdminLayout>
   )
 }
