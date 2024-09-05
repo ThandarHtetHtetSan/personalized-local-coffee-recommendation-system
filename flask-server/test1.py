@@ -28,7 +28,7 @@ from bson.objectid import ObjectId
 app = Flask(__name__)
 CORS(app)
 # Configuration
-app.config["MONGO_URI"] = "mongodb://localhost:27017/coffeeDB" 
+app.config["MONGO_URI"] = "mongodb://localhost:27017/createDB" 
 # Initialize PyMongo
 mongo = PyMongo(app)
 
