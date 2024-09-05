@@ -1,10 +1,11 @@
 import FilterSidebar from '@/components/FilterSidebar';
 import CoffeeCard from '@/components/CoffeeCard';
-import { recommendations as recommendationsArray } from '@/utils/jsonData';
 import Layout from '@/components/Layout';
 import { useCoffee } from '@/contexts/CoffeeContext';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+
+const images = ['coffee-cup-1.jpg', 'coffee-cup-2.jpeg', 'coffee-cup-3.jpeg', 'coffee-cup-4.jpg', 'coffee-cup-5.jpeg', 'coffee-cup-6.jpeg']
 
 export default function Recommendation() {
   const router = useRouter();
@@ -12,20 +13,12 @@ export default function Recommendation() {
   const { coffeeList, setCoffeeList, filters } = useCoffee();
 
   const handleRecommend = async () => {
-    const images = ['coffee-cup-1.jpg', 'coffee-cup-2.jpeg', 'coffee-cup-3.jpeg', 'coffee-cup-4.jpg', 'coffee-cup-5.jpeg', 'coffee-cup-6.jpeg']
-    const shuffledImages = images.sort(() => Math.random() - 0.5);
-    const coffeesWithImage = recommendationsArray.map((coffee, index) => {
-      return ({ ...coffee, thumbnail: `images/coffees/${shuffledImages[index % shuffledImages.length]}` })
-    })
-    setCoffeeList(coffeesWithImage);
-    return
-
 
     const payload = {
       selectedValues: filters
     };
     try {
-      const response = await fetch('http://localhost:5000/api/data', {
+      const response = await fetch('http://127.0.0.1:5000/api/data', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -37,9 +30,13 @@ export default function Recommendation() {
         throw new Error('Failed to fetch recommendations');
       }
 
-      const data = await response.json();
-      console.log(data)
-      // setCoffeeList(data);
+      const recommendationsData = await response.json();
+      console.log('recommendationsData', recommendationsData)
+      const shuffledImages = images.sort(() => Math.random() - 0.5);
+      const coffeesWithImage = recommendationsData.map((coffee, index) => {
+        return ({ ...coffee, thumbnail: `images/coffees/${shuffledImages[index % shuffledImages.length]}` })
+      })
+      setCoffeeList(coffeesWithImage);
     } catch (error) {
       console.error('Error fetching recommendations:', error);
     }

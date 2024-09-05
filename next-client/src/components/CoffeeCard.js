@@ -7,8 +7,8 @@ const CoffeeCard = ({ slug, brand, name, price, thumbnail, gram }) => (
       <div className="image-overlay absolute inset-0 z-10"></div>
     </div>
     <div className="bg-gray-100 text-center">
-      <h2 className="text-lg text-gray-600 bg-gray-200 py-2">{name} ({gram})</h2>
-      <p className="text-gray-500 py-2">{brand}</p>
+      <h2 className="text-gray-500 h-16 flex items-center justify-center">{name} ({gram})</h2>
+      <p className="text-gray-600 py-2 text-lg bg-gray-200">{brand}</p>
       {/* <p className="text-gray-600">Price: {price} MMK</p>
       <p className="text-gray-600">Weight: {gram} grams</p> */}
     </div>

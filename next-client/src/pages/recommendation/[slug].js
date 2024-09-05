@@ -17,7 +17,7 @@ const CoffeeDetails = () => {
 
   const coffeeItems = [
     {
-      label: 'Class Name: ',
+      label: 'Product Name: ',
       value: coffee.class_name
     },
     {

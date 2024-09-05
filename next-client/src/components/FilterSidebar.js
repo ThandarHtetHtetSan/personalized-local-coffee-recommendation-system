@@ -58,9 +58,8 @@ const FilterSidebar = ({ onRecommend }) => {
         <button
           onClick={handleRecommendClick}
           disabled={isDisabled}
-          className={`bg-[#A53F3F] mb-2 px-4 py-2 w-full rounded-full duration-200 flex items-center gap-3 ${isDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:opacity-85 hover:scale-105'}`}
+          className={`bg-[#A53F3F] mb-2 px-4 py-2.5 w-full rounded-lg duration-200 text-white ${isDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:opacity-85 hover:scale-105'}`}
         >
-          <FaCoffee className='text-3xl cursor-pointer'/>
           Recommend
         </button>
       </div>

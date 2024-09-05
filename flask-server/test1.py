@@ -28,7 +28,7 @@ from bson.objectid import ObjectId
 app = Flask(__name__)
 CORS(app)
 # Configuration
-app.config["MONGO_URI"] = "mongodb://localhost:27017/createDB" 
+app.config["MONGO_URI"] = "mongodb://localhost:27017/coffeeDB" 
 # Initialize PyMongo
 mongo = PyMongo(app)
 
@@ -95,6 +95,7 @@ pipeline = [
 
     {
         "$project": {                      # Specify which fields to include/exclude
+            "_id": 1,
             "brand_name": 1,
             "coffee_type": 1,
             "processing_method": 1,
@@ -114,11 +115,11 @@ pipeline = [
 
 dbData = list(mongo.db.coffees.aggregate(pipeline))
 
-# print(dbData)
 # print('---------------------------')
 # Convert the 'price' column from int to str
 # dbData['price'] = dbData['price'].astype(str)
 data = pd.DataFrame(dbData)
+data['_id'] = data['_id'].astype(str)
 data['price'] = data['price'].astype(str)
 data['no_of_bags'] = data['no_of_bags'].astype(str)
 # print(data)
@@ -154,7 +155,6 @@ knn.fit(X, y)
 @app.route('/api/data', methods=['POST'])
 def receive_data():
     data = request.json  # Get JSON data from the request
-
     # Extract selectedValues from the incoming data
     selected_values = data.get('selectedValues', {})
     print(selected_values)
