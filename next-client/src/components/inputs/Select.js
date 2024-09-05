@@ -8,7 +8,7 @@ const Select = ({ label, name, value, onChange, options, className, containerCla
         name={name}
         value={value}
         onChange={onChange}
-        className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${className}`}
+        className={`shadow appearance-none border rounded w-full py-2 px-3 bg-gray-50 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${className}`}
       >
         {options.map(item => (<option key={item.value} value={item.value} disabled={!item.value}>{item.label}</option>))}
       </select>

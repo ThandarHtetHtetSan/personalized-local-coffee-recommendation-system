@@ -88,13 +88,13 @@ export default function AdminLayout({ children }) {
               isActive={activeMenu === "/admin/recipes/add-recipe"}
             />
           </MenuItem>
-          <MenuItem
+          {/* <MenuItem
             title="Settings"
             href="/admin/settings"
             icon={faCogs}
             isSidebarOpen={isSidebarOpen}
             isActive={activeMenu === "/admin/settings"}
-          />
+          /> */}
         </nav>
       </div>
 

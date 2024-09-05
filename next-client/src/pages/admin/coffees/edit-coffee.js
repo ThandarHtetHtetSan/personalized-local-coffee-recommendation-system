@@ -1,22 +1,39 @@
-import axios from 'axios';
+import CoffeeForm from '@/components/forms/CoffeeForm';
+import { useCoffee } from '@/contexts/CoffeeContext';
+import { useState } from 'react';
 
-const updateData = async (brandName, updatedData) => {
-  try {
-    const response = await axios.put('http://localhost:5000/api/update-data', {
-      brandName: brandName,
-      updatedData: updatedData
+const EditCoffee = ({ editCoffee, onClose }) => {
+  const [coffee, setCoffee] = useState({ ...editCoffee })
+  const { coffeeList, setCoffeeList } = useCoffee()
+
+  const handleChange = (e) => {
+    setCoffee({
+      ...coffee,
+      [e.target.name]: e.target.value,
     });
-    console.log(response.data.message);
-  } catch (error) {
-    console.error('There was an error updating the data!', error);
-  }
-};
+  };
 
-// Example usage
-const updatedData = {
-  coffee_type: 'Robusta',
-  processing_method: 'Natural Dry',
-  price: '5000'
-};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const coffeeId = coffee._id;
+      delete coffee._id
+      console.log('coffeeId', coffeeId)
+      console.log('coffee', coffee)
+      // const response = await axios.put(`http://localhost:5000/api/edit-coffee/${coffeeId}`, coffee);
+      // console.log(response.data);
+      const newCoffeeList = coffeeList.map(cof => cof._id === coffeeId ? ({ ...coffee, _id: coffeeId }) : cof);
+      setCoffeeList(newCoffeeList);
+      onClose();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  return (
+    <div className="mt-3">
+      <CoffeeForm formData={coffee} handleChange={handleChange} handleSubmit={handleSubmit} />
+    </div>
+  )
+}
 
-updateData('YourBrandNameHere', updatedData);
+export default EditCoffee

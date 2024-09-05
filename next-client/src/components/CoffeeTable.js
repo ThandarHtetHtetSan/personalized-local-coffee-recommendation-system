@@ -75,7 +75,7 @@ const CoffeeTable = ({ data, onEdit, onDelete }) => {
               <td className="p-4">{item.price}</td>
               <td className="p-4 flex justify-center space-x-4">
                 <button
-                  onClick={() => onEdit(item._id)}
+                  onClick={() => onEdit(item)}
                   className="text-blue-600 hover:text-blue-800"
                 >
                   Edit
