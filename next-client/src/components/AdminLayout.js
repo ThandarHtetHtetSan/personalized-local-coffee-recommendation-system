@@ -69,7 +69,7 @@ export default function AdminLayout({ children }) {
               isActive={activeMenu === "/admin/coffees/add-coffee"}
             />
           </MenuItem>
-          <MenuItem
+          {/* <MenuItem
             title="Recipes"
             icon={faUsers}
             isSidebarOpen={isSidebarOpen}
@@ -89,7 +89,7 @@ export default function AdminLayout({ children }) {
               isSidebarOpen={isSidebarOpen}
               isActive={activeMenu === "/admin/recipes/add-recipe"}
             />
-          </MenuItem>
+          </MenuItem> */}
           {/* <MenuItem
             title="Settings"
             href="/admin/settings"

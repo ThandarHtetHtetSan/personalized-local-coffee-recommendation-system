@@ -1,88 +1,113 @@
-// import Layout from '@/components/Layout';
-// import Image from 'next/image';
-
-// export default function About() {
-//   return (
-//     <Layout>
-//       <div className="relative h-screen bg-cover bg-center" style={{ backgroundImage: 'url("\images\coffee-texture.jpg")' }}>
-//         <div className="absolute inset-0 bg-black opacity-50"></div>
-//         <div className="relative z-10 flex flex-col items-center justify-center h-full text-white text-center">
-//           <h1 className="text-4xl font-bold mb-6">About Us</h1>
-//           <p className="text-xl max-w-2xl">
-//           BIOS IMI International, Inc. delivers high-quality American-made compounding devices focused on customer satisfaction and service. We are a leader in Tamper Evident Cap Technology, offering dedicated support professionals and a mission to build lasting relationships with pharmaceutical and compounding professionals.
-//           </p>
-//         </div>
-//     </div>
-//     </Layout>
-//   );
-//}
-// import React from 'react';
-// import Image from 'next/image';
-
-// const AboutUs = () => {
-//   return (
-//     <div className="min-h-screen flex items-center justify-center bg-[url('/images/coffee-texture.jpg')] bg-cover bg-center">
-//       <div className="bg-white bg-opacity-70 p-10 rounded-lg shadow-lg max-w-3xl text-center">
-//         <h1 className="text-5xl font-extrabold mb-6 text-brown-800">About Us</h1>
-//         <p className="text-lg md:text-xl text-brown-700 mb-6">
-//           BIOS IMI International, Inc. delivers high-quality American-made compounding devices focused on customer satisfaction and service. We are a leader in Tamper Evident Cap Technology, offering dedicated support professionals and a mission to build lasting relationships with pharmaceutical and compounding professionals.
-//         </p>
-//         <button className="bg-brown-700 hover:bg-brown-900 text-white font-bold py-2 px-4 rounded">
-//           Learn More
-//         </button>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default AboutUs;
+import React from 'react'
+import Image from 'next/image'
 import Layout from '@/components/Layout';
-import React from 'react';
-
 const About = () => {
   return (
     <Layout>
-      <div className="bg-gray-100 min-h-screen">
-        <div className="bg-[url('/images/coffee_bg.jpg')] bg-cover bg-center h-96 flex items-center justify-center">
-          <h1 className="text-white text-5xl font-bold">About Our Coffee Recommendation System</h1>
-        </div>
-        <div className="max-w-5xl mx-auto p-6">
-          <div className="bg-white rounded-lg shadow-lg p-8">
-            <h2 className="text-3xl font-semibold text-center mb-6">Our Mission</h2>
-            <p className="text-gray-700 mb-6">
-              Welcome to our Coffee Recommendation System! Our mission is to help coffee enthusiasts discover the perfect coffee
-              tailored to their taste preferences. Whether you prefer a light, fruity flavor or a rich, dark roast, our system
-              uses advanced algorithms to suggest the best coffee options for you.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <div className="bg-gray-50 p-6 rounded-lg shadow-md">
-                <h3 className="text-2xl font-semibold mb-4">Comprehensive Dataset</h3>
-                <p className="text-gray-700">
-                  Our recommendation system is based on a comprehensive dataset of various coffee products, including their roast levels,
-                  ground types, fragrances, flavors, and body profiles. By analyzing this data, we can provide personalized coffee
-                  suggestions that match your unique taste preferences.
-                </p>
-              </div>
-              <div className="bg-gray-50 p-6 rounded-lg shadow-md">
-                <h3 className="text-2xl font-semibold mb-4">State-of-the-Art Technology</h3>
-                <p className="text-gray-700">
-                  The system is built using state-of-the-art technologies, including K-Nearest Neighbors (KNN) algorithm for precise
-                  recommendations and a user-friendly interface developed with React.js and Tailwind CSS. We are committed to offering
-                  a seamless and enjoyable experience for all coffee lovers.
-                </p>
-              </div>
-            </div>
-            <p className="text-gray-700 text-center">
-              We hope you enjoy exploring new coffee varieties and finding your perfect cup with our recommendation system. Cheers
-              to a great coffee experience!
-            </p>
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">
+      <div className="max-w-4xl bg-white shadow-lg rounded-lg p-6">
+        <h1 className="text-3xl font-bold text-center mb-4">About Our Coffee Recommendation System</h1>
+        
+        {/* Image Section */}
+        <div className="flex flex-wrap justify-center space-x-4 mb-6">
+          <div className="relative w-64 h-64">
+            <Image
+              src="/images/recipes/bc2.jpg"
+              alt="Coffee Recommendation Overview"
+              layout="fill"
+              objectFit="cover"
+              className="rounded-lg"
+            />
+          </div>
+          <div className="relative w-64 h-64">
+            <Image
+              src="/images/recipes/bc1.jpg"
+              alt="Coffee Recommendation Interface"
+              layout="fill"
+              objectFit="cover"
+              className="rounded-lg"
+            />
           </div>
         </div>
+
+        <div className="prose">
+          <h2 className="text-2xl font-semibold">What is Our Coffee Recommendation System?</h2>
+          <p>
+            Our Coffee Recommendation System is designed to help coffee enthusiasts discover new and exciting coffee blends based on their preferences. Whether you’re a fan of light roasts or dark, bold flavors, our system uses advanced algorithms to provide personalized coffee suggestions tailored just for you.
+          </p>
+
+          <h2 className="text-2xl font-semibold">How Does It Work?</h2>
+          <p>
+            We utilize the K-Nearest Neighbors (KNN) algorithm to analyze your input preferences and compare them to our extensive coffee dataset. By considering factors such as roast level, ground type, fragrance, flavor, and body, the system recommends coffee options that match your taste profile.
+          </p>
+          
+          <h2 className="text-2xl font-semibold">Features</h2>
+          <ul className="list-disc list-inside mb-4">
+            <li>Personalized coffee recommendations based on user inputs.</li>
+            <li>Easy-to-use interface for selecting your preferred coffee characteristics.</li>
+            <li>Comprehensive dataset including various coffee blends to choose from.</li>
+            <li>Responsive design optimized for both desktop and mobile devices.</li>
+          </ul>
+
+          <h2 className="text-2xl font-semibold">Highlight: Automated Recommendations</h2>
+          <p>
+            Our system offers tailored recommendations based on your roast level selection. Here’s how your choice of roast level influences other coffee attributes:
+          </p>
+          <ul className="list-disc list-inside mb-4">
+            <strong>For Light Roast:</strong> 
+              <ul className="list-disc list-inside">
+                <li><strong>Fragrance:</strong> Fruity</li>
+                <li><strong>Body:</strong> Lighter</li>
+                <li><strong>Flavor:</strong> Very Sweet</li>
+              </ul>
+            
+            <strong>For Medium Light Roast:</strong> 
+              <ul className="list-disc list-inside">
+                <li><strong>Fragrance:</strong> Floral</li>
+                <li><strong>Body:</strong> Light</li>
+                <li><strong>Flavor:</strong> Sweet</li>
+              </ul>
+            
+            <strong>For Medium Roast:</strong> 
+              <ul className="list-disc list-inside">
+                <li><strong>Fragrance:</strong> Normal</li>
+                <li><strong>Body:</strong> Medium</li>
+                <li><strong>Flavor:</strong> Normal</li>
+              </ul>
+            
+            <strong>For Medium Dark Roast:</strong> 
+              <ul className="list-disc list-inside">
+                <li><strong>Fragrance:</strong> Spicy</li>
+                <li><strong>Body:</strong> Full</li>
+                <li><strong>Flavor:</strong> Bitter</li>
+              </ul>
+            
+            <strong>For Dark Roast:</strong> 
+              <ul className="list-disc list-inside">
+                <li><strong>Fragrance:</strong> Smoky</li>
+                <li><strong>Body:</strong> Heavy</li>
+                <li><strong>Flavor:</strong> Very Bitter</li>
+              </ul>
+            
+          </ul>
+          <p>
+            These recommendations ensure that your coffee choice not only aligns with your roast preference but also complements it with a harmonious flavor profile.
+          </p>
+
+          <h2 className="text-2xl font-semibold">Why Choose Us?</h2>
+          <p>
+            Our system is built with a passion for coffee and a commitment to helping you find your perfect cup. With our advanced recommendation algorithms and user-friendly design, discovering new coffee favorites has never been easier. Enjoy a seamless experience and explore a world of coffee with just a few clicks!
+          </p>
+          
+          <h2 className="text-2xl font-semibold">Contact Us</h2>
+          <p>
+            If you have any questions or feedback, feel free to <a href="mailto:support@coffeerecommendation.com" className="text-blue-600 hover:underline">email us</a>. We’d love to hear from you!
+          </p>
+        </div>
       </div>
+    </div>
     </Layout>
-  );
-};
+  )
+}
 
-export default About;
-
-
+export default About

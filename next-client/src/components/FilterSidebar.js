@@ -4,6 +4,7 @@ import { FaCoffee } from "react-icons/fa";
 
 const FilterSidebar = ({ onRecommend }) => {
   const { filters, setFilters } = useCoffee();
+
   const [isDisabled, setIsDisabled] = useState(true);
 
   const handleCheckboxChange = (e, category) => {
@@ -18,6 +19,7 @@ const FilterSidebar = ({ onRecommend }) => {
 
   useEffect(() => {
     const isEmpty = Object.values(filters).some(catVal => catVal === '');
+    console.log(filters)
     setIsDisabled(isEmpty)
   }, [filters])
 
@@ -29,7 +31,7 @@ const FilterSidebar = ({ onRecommend }) => {
     <div className="w-64 min-w-64 p-6 bg-white rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold mb-4 text-gray-900">Filter</h2>
       {['Roast', 'Fragrance', 'Ground Type', 'Body', 'Flavor'].map((category) => {
-        const lowerCaseCategory = category.toLowerCase().replace(' ', '');
+        const lowerCaseCategory = category.toLowerCase().replace(' ', '_');
         return (
           <div key={category} className="mb-4">
             <h3 className="font-semibold mb-2 text-gray-900">{category}</h3>

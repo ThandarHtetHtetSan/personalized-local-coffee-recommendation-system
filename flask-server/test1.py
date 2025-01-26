@@ -144,6 +144,49 @@ mappings = {
 features = ['roast_level', 'ground_type', 'fragrance', 'flavor', 'body']
 
 
+# @app.route('/api/data', methods=['POST'])
+# def receive_data():
+#     dbData = getCoffeesFromDB()
+#     print(dbData)
+
+#     data = pd.DataFrame(dbData)
+#     # Apply label encoding to features
+#     for feature in features:
+#         data[feature] = data[feature].map(mappings[feature])
+
+#     # Prepare features (X) and target (y)
+#     X = data[features]
+#     y = data[['_id', 'class_name', 'brand_name', 'net_weight', 'price', 'processing_method', 'coffee_type', 'contact', 'no_of_bags']] 
+
+#     # Train KNN model
+#     knn = KNeighborsClassifier(n_neighbors=5)
+#     knn.fit(X, y)
+
+#     inputData = request.json  # Get JSON data from the request
+#     # Extract selectedValues from the incoming data
+#     selected_values = inputData.get('selectedValues', {})
+#     print(selected_values)
+#     roast_level = selected_values['roast']
+#     ground_type = selected_values['ground_type']
+#     print(ground_type)
+#     fragrance = selected_values['fragrance']
+#     flavor = selected_values['flavor']
+#     body = selected_values['body']
+
+#     user_input_df = pd.DataFrame([{
+#         'roast_level': roast_level,
+#         'ground_type': ground_type,
+#         'fragrance': fragrance,
+#         'flavor': flavor,
+#         'body': body
+#     }], columns=features)
+#     # Create feature array
+#     # features = np.array([[roast_level, ground_type, fragrance, flavor, body]])
+#     distances, indices = knn.kneighbors(user_input_df)
+#     recommendations = y.iloc[indices[0]].to_dict(orient='records')
+#     # print(recommendations)
+#     return jsonify(recommendations)
+
 @app.route('/api/data', methods=['POST'])
 def receive_data():
     dbData = getCoffeesFromDB()
@@ -168,6 +211,7 @@ def receive_data():
     print(selected_values)
     roast_level = selected_values['roast']
     ground_type = selected_values['ground_type']
+    print(ground_type)
     fragrance = selected_values['fragrance']
     flavor = selected_values['flavor']
     body = selected_values['body']
@@ -179,12 +223,33 @@ def receive_data():
         'flavor': flavor,
         'body': body
     }], columns=features)
-    # Create feature array
-    # features = np.array([[roast_level, ground_type, fragrance, flavor, body]])
+    
+    # Get the nearest neighbors
     distances, indices = knn.kneighbors(user_input_df)
     recommendations = y.iloc[indices[0]].to_dict(orient='records')
-    print(recommendations)
-    return jsonify(recommendations)
+    
+    # Filter for unique brand names
+    unique_recommendations = []
+    seen_brands = set()
+
+    for rec in recommendations:
+        if rec['brand_name'] not in seen_brands:
+            unique_recommendations.append(rec)
+            seen_brands.add(rec['brand_name'])
+        if len(unique_recommendations) == 5:
+            break
+    
+    # If fewer than 5 unique brand names are found, fill the list with other recommendations
+    if len(unique_recommendations) < 5:
+        for rec in recommendations:
+            if rec not in unique_recommendations:
+                unique_recommendations.append(rec)
+            if len(unique_recommendations) == 5:
+                break
+    
+    return jsonify(unique_recommendations)
+
+
 
 @app.route('/api/add-coffee', methods=['POST'])
 def add_coffee():

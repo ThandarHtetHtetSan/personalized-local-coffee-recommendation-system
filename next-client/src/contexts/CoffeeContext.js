@@ -9,7 +9,7 @@ export const CoffeeProvider = ({ children, initialCoffeeList = [] }) => {
   const [filters, setFilters] = useState({
     roast: '',
     fragrance: '',
-    groundtype: '',
+    ground_type: '',
     body: '',
     flavor: ''
   });
